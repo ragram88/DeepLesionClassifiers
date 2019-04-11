@@ -118,7 +118,7 @@ class Layer:
         return updated_biases
     
     
-def runNeuralNetwork(num_input_nodes):
+def runNeuralNetwork(num_input_nodes, epochs):
     # inputs = [1, 2]
     # desired_output = [0.7]
     eta = 1.0
@@ -155,39 +155,40 @@ def runNeuralNetwork(num_input_nodes):
     assignment_inputs = [input_nodes]
     assignment_desired_output = [1]
 
-    for j in range(0, len(assignment_inputs)):
-        inputs = assignment_inputs[j]
-        desired_output = assignment_desired_output[j]
+    for i in range(0, epochs):
+        for j in range(0, len(assignment_inputs)):
+            inputs = assignment_inputs[j]
+            desired_output = assignment_desired_output[j]
 
-        # forward
-        hidden_output = hidden_layer.generate_outputs(inputs)
-        # print("hidden layer output:", hidden_output)
-        output_output = output_layer.generate_outputs(hidden_output)
-        # print("output layer output:", output_output)
-        error = output_layer.generate_error(desired_output)
-        # print("little e:", error)
+            # forward
+            hidden_output = hidden_layer.generate_outputs(inputs)
+            # print("hidden layer output:", hidden_output)
+            output_output = output_layer.generate_outputs(hidden_output)
+            # print("output layer output:", output_output)
+            error = output_layer.generate_error(desired_output)
+            # print("little e:", error)
 
-        big_e = 0.5 * error[0] ** 2
-        # print("big e:", big_e)
+            big_e = 0.5 * error[0] ** 2
+            # print("big e:", big_e)
 
-        # backward
-        # set delta values
-        output_delta_values = output_layer.set_output_delta_values(desired_output)
-        # print("output layer updated weights:", output_delta_values)
-        hidden_delta_values = hidden_layer.set_hidden_delta_values(output_layer)
-        # print("output layer updated weights:", hidden_delta_values)
+            # backward
+            # set delta values
+            output_delta_values = output_layer.set_output_delta_values(desired_output)
+            # print("output layer updated weights:", output_delta_values)
+            hidden_delta_values = hidden_layer.set_hidden_delta_values(output_layer)
+            # print("output layer updated weights:", hidden_delta_values)
 
-        # update weights
-        output_updated_weights = output_layer.update_weights(hidden_output)
-        # print("output layer updated weights:", output_updated_weights)
-        hidden_updated_weights = hidden_layer.update_weights(inputs)
-        # print("hidden layer updated weights:", hidden_updated_weights)
+            # update weights
+            output_updated_weights = output_layer.update_weights(hidden_output)
+            # print("output layer updated weights:", output_updated_weights)
+            hidden_updated_weights = hidden_layer.update_weights(inputs)
+            # print("hidden layer updated weights:", hidden_updated_weights)
 
-        # update biases
-        output_updated_bias = output_layer.update_bias()
-        # print("output layer updated bias:", output_updated_bias)
-        hidden_updated_bias = hidden_layer.update_bias()
-        # print("hidden layer updated bias:", hidden_updated_bias)
+            # update biases
+            output_updated_bias = output_layer.update_bias()
+            # print("output layer updated bias:", output_updated_bias)
+            hidden_updated_bias = hidden_layer.update_bias()
+            # print("hidden layer updated bias:", hidden_updated_bias)
 
 
 if __name__ == "__main__":
@@ -197,20 +198,17 @@ if __name__ == "__main__":
         print("N:", n)
 
         time_format = '%H:%M:%S'
-        sum_time = 0
+        epochs = 10
 
-        for i in range(0, 10):
-            start_time = datetime.now()
+        start_time = datetime.now()
+        # print("Start Time:", start_time.strftime(time_format))
 
-            # print("Start Time:", start_time.strftime(time_format))
-            runNeuralNetwork(n * n)
+        runNeuralNetwork(n * n, epochs)
 
-            end_time = datetime.now()
-            # print("End Time:", end_time.strftime(time_format))
-            execution_time = end_time - start_time
-            # print("Execution Time:", execution_time)
-
-            sum_time += execution_time.total_seconds()
+        end_time = datetime.now()
+        # print("End Time:", end_time.strftime(time_format))
+        execution_time = end_time - start_time
+        # print("Execution Time:", execution_time)
 
         n = n * 2
-        print("Average Execution Time (seconds):", sum_time/10)
+        print("Average Execution Time (seconds):", execution_time.total_seconds() / epochs)
