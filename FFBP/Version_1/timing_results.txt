@@ -1,0 +1,12 @@
+N: 2
+Average Execution Time (seconds): 0.00012150000000000001
+N: 4
+Average Execution Time (seconds): 0.0004685
+N: 8
+Average Execution Time (seconds): 0.005349700000000001
+N: 16
+Average Execution Time (seconds): 0.07529050000000001
+N: 32
+Average Execution Time (seconds): 1.2071786
+N: 64
+Average Execution Time (seconds): 19.5077894
