@@ -142,8 +142,8 @@ if __name__ == '__main__':
 	print(len(dtank.getImages()))
 
 	## Generate array of data desired
-	test_data = dtank.generate(32, 32, 2)
-	print(len(test_data))
+	test_data = dtank.generate(3, 4, 2)
+	print(test_data)
 
 
 	

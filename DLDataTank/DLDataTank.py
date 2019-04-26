@@ -121,8 +121,8 @@ class DLDataTank:
 							y_left_top_corner, 
 							y_left_top_corner+width-1])
 						dataset.append([1.0,
-								np.ravel(image_pixels[x_left_top_corner:x_left_top_corner+length,
-											y_left_top_corner:y_left_top_corner+width]).tolist()])
+								np.ravel(image_pixels[y_left_top_corner:y_left_top_corner+width,
+											x_left_top_corner:x_left_top_corner+length]).tolist()])
 					else:
 						print("Generating non-lesion array.")
 						## Find distance between edges of image and bounding box
@@ -150,8 +150,8 @@ class DLDataTank:
 							y_left_top_corner, 
 							y_left_top_corner+width-1])
 						dataset.append([0.0,
-								np.ravel(image_pixels[x_left_top_corner:x_left_top_corner+length,
-											y_left_top_corner:y_left_top_corner+width]).tolist()])
+								np.ravel(image_pixels[y_left_top_corner:y_left_top_corner+width,
+											x_left_top_corner:x_left_top_corner+length]).tolist()])
 				return dataset
 		except:
 			raise
