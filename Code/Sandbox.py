@@ -97,7 +97,7 @@ class Sandbox:
 			self.training = deepcopy(self.dataset[0:self.trainingLen])
 			print("Training set:")
 			for tr in self.training:
-				print([tr[2])
+				print([tr[2]])
 			self.validation = deepcopy(self.dataset[self.trainingLen:self.trainingLen+self.validationLen])
 			print("Validation set:")
 			for v in self.validation:
