@@ -41,13 +41,13 @@ class Layer:
             # return empty list if error
             return []
     # get layer output vector
-    def get_layer_output_vector(self, input):
+    def get_layer_output_vector(self, inp):
         try:
             if self.error == 1:
                 raise AttributeError("1 or more variables not set properly.")
             # calculate all activation values for perceptrons in layer, store in output vector
             for i in range(self.layer_length):
-                self.perceptrons[i].calc_activity(deepcopy(input))
+                self.perceptrons[i].calc_activity(inp)
                 self.perceptrons[i].calc_activation()
                 self.output_vector[i] = self.perceptrons[i].activation
             return self.output_vector

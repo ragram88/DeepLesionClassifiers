@@ -13,6 +13,7 @@ from StringIO import StringIO
 import os
 import random
 import matplotlib.image as mpimg
+import cv2
 
 class DLDataTank:
 	# init - Initialize data tank
@@ -92,7 +93,10 @@ class DLDataTank:
 					print("Image generated from "+img.Local_file_name.item())
 					## Get image pixels
 					# print(type(img.Local_file_name.item()))
-					image_pixels = mpimg.imread(img.Local_file_name.item())
+					# image_pixels = mpimg.imread(img.Local_file_name.item())
+					image_pixels = cv2.imread(img.Local_file_name.item(),
+									cv2.IMREAD_GRAYSCALE)
+					print(image_pixels)
 					## Get classification
 					## True - Has lesion
 					## False - Does not have lesion

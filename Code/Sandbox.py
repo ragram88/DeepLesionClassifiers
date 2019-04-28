@@ -113,13 +113,11 @@ class Sandbox:
 				print("Training!")
 				for tr in self.training:
 					## Get inputs to each layer
-					## inp = self.hiddenLayers[0]*[tr[1]]
-					inpTr = tr[1]
+					inpTr = self.normalize(tr[1])
 					inputsTr = [inpTr]
 					for l in range(0, self.layersLen):
 						inpTr = self.layers[l].get_layer_output_vector(inpTr)
 						inputsTr.append(inpTr)
-					# print([inpTr, tr[0]])
 					## Calculate delta values
 					for l in range(self.layersLen-1, 0, -1):
 						if l==self.layersLen-1:
@@ -141,10 +139,9 @@ class Sandbox:
 				print("Validation!")
 				for v in self.validation:
 					## Get inputs to each layer
-					inpV = v[1]
+					inpV = self.normalize(v[1])
 					for l in range(0, self.layersLen):
 						inpV = self.layers[l].get_layer_output_vector(inpV)
-					# print([inpV, v[0]])
 					## Calculate error
 					error = self.layers[self.layersLen-1].get_error_vector([v[0]])
 					big_e = 0.5 * error[0] ** 2
@@ -163,14 +160,14 @@ class Sandbox:
 				## Get true value
 				self.true.append(te[0])
 				## Get inputs to each layer
-				inpTe = deepcopy(te[1])
+				inpTe = self.normalize(te[1])
 				for l in range(0, self.layersLen):
 					inpTe = self.layers[l].get_layer_output_vector(inpTe)
 				## Calculate error
 				error = self.layers[self.layersLen-1].get_error_vector([te[0]])
 				big_e = 0.5 * error[0] ** 2
 				errors.append(big_e)
-				if inpTe >= self.lesionThreshold:
+				if inpTe[0] >= self.lesionThreshold:
 					self.pred.append(1.0)
 				else:
 					self.pred.append(0.0)
@@ -195,3 +192,11 @@ class Sandbox:
 	def setLesionThreshold(self,
 		lesionThreshold):
 		self.lesionThreshold = lesionThreshold
+	# normalize - Normalization scheme for input values
+	# @return - float, array data
+	def normalize(self,
+		inp):
+		## Had to add normTerm to deal with activity function getting
+		## too large
+		normTerm = 256.0/2
+		return [i-normTerm for i in inp]

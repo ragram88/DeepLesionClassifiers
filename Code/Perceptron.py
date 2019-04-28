@@ -45,11 +45,16 @@ class Perceptron:
 			if self.error == 1:
 				raise AttributeError("1 or more variables not set properly.")
 			elif activity is not None:
-				self.activity = float(deepcopy(activity))
+				self.activity = float(activity)
 			else:
 				self.activity = self.activity
 			# compute activation using sigmoid function y_j = 1/(1+e^(-A_j))
-			self.activation = 1/(1+math.exp(-1*self.activity))
+			# had to handle overflow issue with activity being too negative
+			# 1/(1+e^(-x)) = e^x/(e^x+1)=1-1/(1+e^x)
+			if self.activity < 0:
+				self.activation = 1-1/(1+math.exp(self.activity))
+			else:
+				self.activation = 1/(1+math.exp(-1*self.activity))
 		except:
 			raise
 	# set delta

@@ -143,11 +143,13 @@ if __name__ == '__main__':
 		eta)
 
 	## Run Train-Validation-Testing scheme
-	trainingLen = 20
-	validationLen = 10
-	testingLen = 10
+	trainingLen = 24
+	validationLen = 8
+	testingLen = 8
 	maxEpochs = 10
 	errorThreshold = 0.05
+	classificationThreshold = 0.5
+	baseline.setLesionThreshold(classificationThreshold)
 	baseline.runExperiment(trainingLen,
 		validationLen,
 		testingLen,
